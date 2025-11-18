@@ -1,0 +1,132 @@
+/* ====GLOBAL STYLE==== */
+body {
+  background-color: #F8F8F8;
+}
+div.container {
+  width: 960px;
+  padding: 10px 50px 20px;
+  background-color: white;
+  margin: 20px auto;
+  box-shadow: 1px 0px 10px, -1px 0px 10px ;
+}
+h1,h2,h3 {
+  text-align: center;
+  font-family: Cambria, "Times New Roman", serif;
+  clear: both;
+}
+#footer {
+  text-align: right;
+  margin-top: 20px;
+}
+
+/* =====HEADER===== */
+#header {
+  height: 60px;
+}
+#logo {
+  font-size: 42px;
+  float: left;
+  text-shadow: 1px 2px #C0C0C0;
+  margin-top: 10px; 
+  margin-bottom: 0px;
+  }
+#logo span {
+  color: blue;
+}
+#tanggal{ 
+  text-align: right;
+}
+hr {
+  margin: 0px; 
+}
+
+/* =====NAVIGATION===== */
+nav {
+  width: 500px;
+  float: left;
+  clear: both;
+}
+ul{
+  padding: 0;
+  margin: 20px 0;
+  list-style: none;
+  overflow: hidden;
+}
+nav li a {
+  float: left;
+  background-color: #E3E3E3;
+  color: black;
+  text-decoration: none;
+  font-size: 20px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px 20px;
+}
+nav li a:hover {
+  background-color: #757;
+  color: white;
+}
+
+/* ======TABLE====== */
+table {
+  border-collapse:collapse;
+  border-spacing:0;
+  border:1px black solid;
+  width:100%
+}
+th, td {
+  padding:8px 15px;
+  border:1px black solid;
+}
+tr:nth-child(2n+3) {
+  background-color: #F2F2F2;
+}
+
+/* ======PESAN====== */
+.pesan {
+  background-color: #C0FFA9;
+  padding: 10px 15px;
+  margin: 0 0 20px 0;
+  border: 1px solid green;
+  box-shadow: 1px 0px 3px green;
+  text-align: center;
+}
+.error {
+  background-color: #FFECEC;
+  padding: 10px 15px;
+  margin: 0 0 20px 0;
+  border: 1px solid red;
+  box-shadow: 1px 0px 3px red ;
+}
+
+/* ====SEARCH BOX==== */
+#search {
+  font-size: 20px;
+  width: 340px;
+  float: right;
+  margin: 20px 0px;
+  background-color: #E3E3E3;
+}
+#search p {
+  margin: 0px;
+  padding: 8px 20px; 
+}
+
+/* ====FORM==== */
+#form_mahasiswa p {
+  margin:0;
+}
+#form_mahasiswa fieldset {
+  padding:20px;
+}
+#form_mahasiswa input, #form_mahasiswa select {
+  margin-bottom:10px;
+}
+#form_mahasiswa label {
+  width:110px;
+  float:left;
+  margin-right:10px;
+}
+#form_mahasiswa [readonly] {
+background-color: #F3F3F3;
+}

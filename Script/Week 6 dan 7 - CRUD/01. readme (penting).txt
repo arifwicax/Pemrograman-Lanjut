@@ -1,0 +1,7 @@
+Jika ingin menjalankan aplikasi CRUD ini, silahkan akses file generate.php terlebih dahulu (file ini dipakai untuk pembuatan tabel).
+
+Data untuk login ke aplikasi:
+USER     : admin123
+PASSWORD : rahasia
+
+Penjelasan kode program yang lebih detail ada di buku
