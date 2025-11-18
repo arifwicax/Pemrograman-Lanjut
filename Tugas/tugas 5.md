@@ -1,6 +1,5 @@
 ## **Tugas 5: Query Builder Sederhana dengan PHP OOP**
 
----
 
 ### 🧩 **Tujuan Pembelajaran**
 
@@ -94,7 +93,7 @@ $db->insert('produk', [
 
 ---
 
-### 🧠 **Nilai Tambah (Bonus Challenge)**
+### **Nilai Tambah (Bonus Challenge)**
 
 * Tambahkan validasi agar **stok tidak bisa bernilai negatif**.
 * Buat method baru `search($table, $keyword)` untuk mencari produk berdasarkan nama.
