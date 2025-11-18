@@ -1,4 +1,4 @@
-## **Tugas: Membuat Tampilan CV Pribadi Menggunakan Bahasa Pemrograman Web**
+## **Tugas: Membuat Tampilan CV Pribadi**
 
 ### **Tujuan Pembelajaran**
 
