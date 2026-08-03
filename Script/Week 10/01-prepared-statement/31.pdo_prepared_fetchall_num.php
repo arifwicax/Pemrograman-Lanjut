@@ -1,0 +1,24 @@
+<?php
+try {
+  $databasePdo = new PDO("mysql:host=localhost;dbname=kampus_lanjut", "root", "");
+  $databasePdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  $perintahSql = "SELECT * FROM inventaris WHERE id_inventaris = ?";
+  $pernyataan = $databasePdo->prepare($perintahSql);
+  $pernyataan->execute([4]);
+
+  $arr = $pernyataan->fetchAll(PDO::FETCH_NUM);
+  echo "<pre>";
+  print_r($arr);
+  echo "</pre>";
+
+  echo "<br>".$arr[2][1];
+
+  $pernyataan = NULL;
+}
+catch (\PDOException $e) {
+  echo "Koneksi / Query bermasalah: ".$e->getMessage(). " (".$e->getCode().")";
+}
+finally {
+  $databasePdo=NULL;
+}
