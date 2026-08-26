@@ -8,14 +8,14 @@
 
 # 1. IDENTITAS MATA KULIAH
 
-| Komponen       | Keterangan                                          |
-| -------------- | --------------------------------------------------- |
-| Mata Kuliah    | Pemrograman Lanjut                                  |
-| Minggu         | 2                                                   |
-| Topik          | Penerapan Class, Constructor, dan Method            |
-| Dosen Pengampu | **Arif Wicaksono Septyanto, S.Kom., M.Kom.**        |
-| Bobot          | Menyesuaikan RPS                                    |
-| Durasi         | 1 Pertemuan (3 × 50 menit)                          |
+| Komponen       | Keterangan                                         |
+| -------------- | -------------------------------------------------- |
+| Mata Kuliah    | Pemrograman Lanjut                                 |
+| Minggu         | 2                                                  |
+| Topik          | Penerapan Class, Constructor, dan Method           |
+| Dosen Pengampu | **Arif Wicaksono Septyanto, S.Kom., M.Kom.** |
+| Bobot          | Menyesuaikan RPS                                   |
+| Durasi         | 1 Pertemuan (3 × 50 menit)                        |
 
 ---
 
@@ -35,15 +35,15 @@ Mahasiswa mampu merancang dan mengembangkan aplikasi PHP berbasis pemrograman be
 
 Penilaian mata kuliah Pemrograman Lanjut terdiri atas beberapa komponen yang digunakan untuk mengukur ketercapaian CPMK mahasiswa selama satu semester.
 
-| Komponen Penilaian                                | Persentase |
-| ------------------------------------------------- | ---------: |
-| Tugas                                             |        20% |
-| Review                                            |        10% |
-| Ujian Tengah Semester (UTS)                       |        20% |
-| Ujian Akhir Semester (UAS) – Proyek *Case Method* |        20% |
-| Praktikum                                         |        20% |
-| Kuis                                              |        10% |
-| **Total**                                         |   **100%** |
+| Komponen Penilaian                                  |     Persentase |
+| --------------------------------------------------- | -------------: |
+| Tugas                                               |            20% |
+| Review                                              |            10% |
+| Ujian Tengah Semester (UTS)                         |            20% |
+| Ujian Akhir Semester (UAS) – Proyek*Case Method* |            20% |
+| Praktikum                                           |            20% |
+| Kuis                                                |            10% |
+| **Total**                                     | **100%** |
 
 ---
 
@@ -59,6 +59,7 @@ Setelah mengikuti perkuliahan minggu kedua, mahasiswa mampu:
 
 Bahan kajian pada pertemuan minggu kedua meliputi:
 
+* Pengertian dan penggunaan *constructor*
 * *Static property* dan *static method*
 * *Class constant*
 * Penggunaan keyword `self` dan `static`
@@ -76,12 +77,14 @@ Indikator penilaian pada pertemuan minggu kedua adalah:
 
 Indikator tersebut dijabarkan ke dalam kemampuan sebagai berikut:
 
-1. Mendefinisikan dan mengakses *static property* serta *static method*.
-2. Membuat *class constant* dan menggunakannya di dalam class.
-3. Membedakan penggunaan keyword `self` dan `$this`.
-4. Menerapkan *method chaining* untuk merangkai pemanggilan method.
-5. Menggunakan objek sebagai parameter dan nilai kembalian (*return value*) method.
-6. Merancang constructor dengan validasi tipe data input.
+1. Menjelaskan bahwa *constructor* dijalankan secara otomatis ketika sebuah objek dibuat.
+2. Membuat *constructor* untuk memberikan nilai awal pada properti objek.
+3. Mendefinisikan dan mengakses *static property* serta *static method*.
+4. Membuat *class constant* dan menggunakannya di dalam class.
+5. Membedakan penggunaan keyword `self` dan `$this`.
+6. Menerapkan *method chaining* untuk merangkai pemanggilan method.
+7. Menggunakan objek sebagai parameter dan nilai kembalian (*return value*) method.
+8. Merancang *constructor* dengan validasi tipe data input.
 
 ---
 
@@ -94,7 +97,77 @@ Indikator tersebut dijabarkan ke dalam kemampuan sebagai berikut:
 
 # 9. MATERI PERKULIAHAN
 
-## 9.1. Static Property dan Static Method
+## 9.1. Constructor
+
+**Constructor adalah method khusus yang otomatis dijalankan ketika sebuah objek dibuat.** Dalam PHP, constructor ditulis menggunakan method `__construct()` (dua garis bawah di awal). Constructor biasanya digunakan untuk memberikan nilai awal pada properti agar objek langsung siap digunakan.
+
+```php
+<?php
+class Mahasiswa {
+    public $nama;
+    public $nim;
+
+    public function __construct($nama, $nim) {
+        $this->nama = $nama;
+        $this->nim  = $nim;
+
+        echo "Objek Mahasiswa berhasil dibuat.<br>";
+    }
+
+    public function tampilkanData() {
+        return "Nama: {$this->nama} | NIM: {$this->nim}";
+    }
+}
+
+// Saat keyword new dijalankan, __construct() otomatis dipanggil.
+$mahasiswa = new Mahasiswa("Budi", "12345678");
+
+echo $mahasiswa->tampilkanData();
+// Nama: Budi | NIM: 12345678
+```
+
+Alur pembuatan objek pada contoh tersebut adalah:
+
+1. Program menjalankan `new Mahasiswa("Budi", "12345678")`.
+2. PHP membuat sebuah objek dari class `Mahasiswa`.
+3. PHP otomatis menjalankan method `__construct()`.
+4. Nilai parameter disimpan ke properti objek melalui `$this`.
+5. Objek yang sudah memiliki nilai awal disimpan dalam variabel `$mahasiswa`.
+
+Keyword `$this` merujuk pada **objek yang sedang digunakan**. Karena itu, `$this->nama` berarti properti `nama` milik objek tersebut.
+
+### Constructor Tanpa Parameter
+
+Constructor tidak harus memiliki parameter. Constructor tanpa parameter dapat digunakan untuk menetapkan nilai awal yang sama pada setiap objek.
+
+```php
+<?php
+class Lampu {
+    public $status;
+
+    public function __construct() {
+        $this->status = "mati";
+    }
+}
+
+$lampuKelas = new Lampu();
+echo $lampuKelas->status; // mati
+```
+
+### Perbedaan Constructor dan Method Biasa
+
+| Aspek | Constructor | Method biasa |
+| ----- | ----------- | ------------ |
+| Nama method | `__construct()` | Bebas sesuai kebutuhan |
+| Waktu dijalankan | Otomatis ketika objek dibuat dengan `new` | Ketika dipanggil secara eksplisit |
+| Tujuan umum | Memberikan nilai atau kondisi awal objek | Menjalankan perilaku tertentu dari objek |
+| Cara menjalankan | `new NamaClass(...)` | `$objek->namaMethod()` |
+
+> **Catatan:** Setiap kali objek baru dibuat, constructor akan dijalankan kembali untuk objek tersebut. Argumen pada `new NamaClass(...)` harus sesuai dengan parameter yang didefinisikan dalam `__construct()`.
+
+---
+
+## 9.2. Static Property dan Static Method
 
 Pada pertemuan sebelumnya, semua properti dan method diakses melalui objek. PHP juga menyediakan mekanisme lain di mana properti dan method **melekat langsung pada class**, bukan pada objek. Ini disebut *static property* dan *static method*.
 
@@ -127,10 +200,10 @@ Karena `$totalBuku` melekat pada class (bukan objek), nilainya **dibagi oleh sem
 
 ### Perbedaan `self` dan `$this`
 
-| Keyword | Merujuk ke | Digunakan untuk |
-| ------- | ---------- | --------------- |
+| Keyword   | Merujuk ke     | Digunakan untuk                      |
+| --------- | -------------- | ------------------------------------ |
 | `$this` | Objek saat ini | Mengakses properti/method non-static |
-| `self`  | Class saat ini | Mengakses properti/method static |
+| `self`  | Class saat ini | Mengakses properti/method static     |
 
 ```php
 <?php
@@ -161,7 +234,7 @@ echo Buku::getJumlah(); // Objek dibuat: 3
 
 ---
 
-## 9.2. Class Constant
+## 9.3. Class Constant
 
 *Class constant* adalah nilai tetap yang didefinisikan di dalam class menggunakan keyword `const`. Berbeda dengan properti biasa, nilainya tidak dapat diubah sepanjang program berjalan.
 
@@ -189,7 +262,7 @@ echo Konversi::KM_PER_MILE;                // 1.60934
 
 ---
 
-## 9.3. Method Chaining
+## 9.4. Method Chaining
 
 *Method chaining* adalah teknik memanggil beberapa method secara berurutan dalam satu baris kode. Caranya, setiap method mengembalikan `$this` agar method berikutnya bisa langsung dipanggil.
 
@@ -270,7 +343,7 @@ Method chaining membuat kode lebih ringkas dan mudah dibaca.
 
 ---
 
-## 9.4. Objek sebagai Parameter dan Return Value
+## 9.5. Objek sebagai Parameter dan Return Value
 
 Method dapat menerima objek sebagai parameter maupun mengembalikan objek sebagai nilai kembalian. Ini memungkinkan class-class berbeda saling berinteraksi.
 
@@ -356,7 +429,7 @@ echo "Mahasiswa terbaik: {$terbaik->nama} (IPK: {$terbaik->ipk})";
 
 ---
 
-## 9.5. Constructor dengan Validasi
+## 9.6. Constructor dengan Validasi
 
 Constructor yang baik tidak hanya mengisi properti, tetapi juga memvalidasi data yang masuk. Ini mencegah objek terbuat dalam keadaan tidak valid.
 
@@ -416,13 +489,14 @@ try {
 
 ---
 
-## 9.6. Rangkuman
+## 9.7. Rangkuman
 
-| Konsep | Cara Akses | Keterangan |
-| --- | --- | --- |
-| *Static property* | `NamaClass::$prop` atau `self::$prop` | Dibagi semua objek, tidak perlu instansiasi |
-| *Static method* | `NamaClass::method()` atau `self::method()` | Dapat dipanggil tanpa membuat objek |
-| *Class constant* | `NamaClass::KONSTANTA` atau `self::KONSTANTA` | Nilai tetap, tidak bisa diubah |
-| *Method chaining* | `$obj->m1()->m2()->m3()` | Setiap method `return $this` |
-| Objek sebagai parameter | Type hint: `function f(NamaClass $obj)` | Memastikan tipe yang diterima |
-| Validasi di constructor | `throw new Exception(...)` | Mencegah objek dengan data tidak valid |
+| Konsep                  | Cara Akses                                        | Keterangan                                  |
+| ----------------------- | ------------------------------------------------- | ------------------------------------------- |
+| *Constructor*         | `public function __construct(...)`              | Otomatis dijalankan ketika objek dibuat     |
+| *Static property*     | `NamaClass::$prop` atau `self::$prop`         | Dibagi semua objek, tidak perlu instansiasi |
+| *Static method*       | `NamaClass::method()` atau `self::method()`   | Dapat dipanggil tanpa membuat objek         |
+| *Class constant*      | `NamaClass::KONSTANTA` atau `self::KONSTANTA` | Nilai tetap, tidak bisa diubah              |
+| *Method chaining*     | `$obj->m1()->m2()->m3()`                        | Setiap method`return $this`               |
+| Objek sebagai parameter | Type hint:`function f(NamaClass $obj)`          | Memastikan tipe yang diterima               |
+| Validasi di constructor | `throw new Exception(...)`                      | Mencegah objek dengan data tidak valid      |

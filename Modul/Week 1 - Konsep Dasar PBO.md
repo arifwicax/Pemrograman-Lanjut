@@ -8,14 +8,14 @@
 
 # 1. IDENTITAS MATA KULIAH
 
-| Komponen       | Keterangan                                                         |
-| -------------- | ------------------------------------------------------------------ |
-| Mata Kuliah    | Pemrograman Lanjut                                                 |
-| Minggu         | 1                                                                  |
-| Topik          | Pengenalan Pemrograman Berorientasi Objek (OOP)                    |
-| Dosen Pengampu | **Arif Wicaksono Septyanto, S.Kom., M.Kom.**                       |
-| Bobot          | Menyesuaikan RPS                                                   |
-| Durasi         | 1 Pertemuan (3 × 50 menit)                                         |
+| Komponen       | Keterangan                                         |
+| -------------- | -------------------------------------------------- |
+| Mata Kuliah    | Pemrograman Lanjut                                 |
+| Minggu         | 1                                                  |
+| Topik          | Pengenalan Pemrograman Berorientasi Objek (OOP)    |
+| Dosen Pengampu | **Arif Wicaksono Septyanto, S.Kom., M.Kom.** |
+| Bobot          | 3 SKS                                              |
+| Durasi         | 1 Pertemuan (3 × 50 menit)                        |
 
 ---
 
@@ -35,15 +35,15 @@ Mahasiswa mampu merancang dan mengembangkan aplikasi PHP berbasis pemrograman be
 
 Penilaian mata kuliah Pemrograman Lanjut terdiri atas beberapa komponen yang digunakan untuk mengukur ketercapaian CPMK mahasiswa selama satu semester.
 
-| Komponen Penilaian                                | Persentase |
-| ------------------------------------------------- | ---------: |
-| Tugas                                             |        20% |
-| Review                                            |        10% |
-| Ujian Tengah Semester (UTS)                       |        20% |
-| Ujian Akhir Semester (UAS) – Proyek *Case Method* |        20% |
-| Praktikum                                         |        20% |
-| Kuis                                              |        10% |
-| **Total**                                         |   **100%** |
+| Komponen Penilaian                                  |     Persentase |
+| --------------------------------------------------- | -------------: |
+| Tugas                                               |            20% |
+| Review                                              |            10% |
+| Ujian Tengah Semester (UTS)                         |            20% |
+| Ujian Akhir Semester (UAS) – Proyek*Case Method* |            20% |
+| Praktikum                                           |            20% |
+| Kuis                                                |            10% |
+| **Total**                                     | **100%** |
 
 ---
 
@@ -106,11 +106,11 @@ Secara formal, definisi OOP menurut Wikipedia adalah:
 
 Tiga prinsip dasar OOP yang menjadi fondasi paradigma ini adalah:
 
-| Prinsip | Penjelasan Singkat |
-| --- | --- |
+| Prinsip           | Penjelasan Singkat                                                                |
+| ----------------- | --------------------------------------------------------------------------------- |
 | *Encapsulation* | Pembungkusan data dan method dalam satu unit (class), dengan pengaturan hak akses |
-| *Inheritance* | Kemampuan sebuah class mewarisi properti dan method dari class lain |
-| *Polymorphism* | Kemampuan objek berbeda merespons perintah yang sama dengan cara yang berbeda |
+| *Inheritance*   | Kemampuan sebuah class mewarisi properti dan method dari class lain               |
+| *Polymorphism*  | Kemampuan objek berbeda merespons perintah yang sama dengan cara yang berbeda     |
 
 ---
 
@@ -125,6 +125,7 @@ Pemrograman prosedural cocok untuk aplikasi kecil, namun memiliki keterbatasan s
 3. **Kode terlalu spesifik** — sulit digunakan kembali (*reuse*) untuk kasus yang berbeda.
 
 OOP hadir untuk mengatasi keterbatasan tersebut. Dengan OOP:
+
 - Setiap bagian program dikelola sebagai objek yang **terpisah dan mandiri**, sehingga perubahan pada satu objek tidak langsung memengaruhi objek lain.
 - Pembagian tugas dalam tim menjadi lebih jelas karena setiap programmer mengerjakan objek yang berbeda.
 - Kode lebih mudah dikembangkan dan dipelihara dalam jangka panjang.
@@ -157,6 +158,7 @@ Dalam praktik nyata, keduanya sering dikombinasikan. Kode utama tetap prosedural
 PHP adalah bahasa pemrograman **multi-paradigma** yang mendukung baik pemrograman prosedural maupun OOP. Dukungan OOP di PHP mulai diperkenalkan pada versi 4 dan disempurnakan pada versi 5 serta 7.
 
 Memahami OOP di PHP menjadi keharusan bagi pengembang web modern, karena:
+
 - Framework populer seperti **Laravel** dan **CodeIgniter** dibangun di atas prinsip OOP.
 - Mayoritas lowongan kerja PHP mensyaratkan penguasaan OOP.
 
