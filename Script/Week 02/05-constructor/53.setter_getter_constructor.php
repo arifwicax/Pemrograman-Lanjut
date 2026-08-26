@@ -1,11 +1,11 @@
 <?php
 class Perangkat {
-  private $jenama;
+  private $merek;
   private $stok;
 
-  private function setMerek($jenama){
-    if (is_string($jenama)) {
-      $this->merek = $jenama;
+  private function setMerek($merek){
+    if (is_string($merek)) {
+      $this->merek = $merek;
     }
     else {
       die("Error: merek harus berbentuk string <br>");
@@ -21,8 +21,8 @@ class Perangkat {
     }
   }
 
-  public function __construct($jenama, $stok){
-    $this->setMerek($jenama);
+  public function __construct($merek, $stok){
+    $this->setMerek($merek);
     $this->setStok($stok);
   }
 

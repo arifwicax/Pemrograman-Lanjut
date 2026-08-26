@@ -1,12 +1,12 @@
 <?php
 
 class Monitor {
-  private $jenama;
+  private $merek;
   private $jenisLayar;
   private $ukuranLayar;
 
-  public function setMerek($jenama){
-    $this->merek = $jenama;
+  public function setMerek($merek){
+    $this->merek = $merek;
     return $this;
   }
   public function setJenisLayar($jenisLayar){

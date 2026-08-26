@@ -1,9 +1,9 @@
 <?php
 class Perangkat {
-  private $jenama;
+  private $merek;
 
-  public function setMerek($jenama){
-    $this->merek = $jenama;
+  public function setMerek($merek){
+    $this->merek = $merek;
   }
 
   public function getMerek(){

@@ -1,20 +1,20 @@
 <?php
 class Perangkat {
   public $jenis;
-  public $jenama;
+  public $merek;
   public $stok;
 
-  public function __construct($jenis, $jenama, $stok){
+  public function __construct($jenis, $merek, $stok){
     $this->jenis = $jenis;
-    $this->merek = $jenama;
+    $this->merek = $merek;
     $this->stok = $stok;
   }
 }
 
 class Monitor extends Perangkat {
-  public function __construct($jenis, $jenama, $stok){
+  public function __construct($jenis, $merek, $stok){
     $this->jenis = $jenis;
-    $this->merek = $jenama;
+    $this->merek = $merek;
     $this->stok = $stok;
   }
 }

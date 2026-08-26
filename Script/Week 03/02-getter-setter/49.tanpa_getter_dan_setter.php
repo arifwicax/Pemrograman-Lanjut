@@ -1,6 +1,6 @@
 <?php
 class Perangkat {
-  public $jenama;
+  public $merek;
   public $stok;
 }
 

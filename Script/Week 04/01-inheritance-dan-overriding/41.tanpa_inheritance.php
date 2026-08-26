@@ -1,13 +1,13 @@
 <?php
 class Monitor {
   public $jenis;
-  public $jenama;
+  public $merek;
   public $stok;
   public $ukuranLayar;
 
-  public function __construct($jenis, $jenama, $stok, $ukuranLayar){
+  public function __construct($jenis, $merek, $stok, $ukuranLayar){
     $this->jenis = $jenis;
-    $this->merek = $jenama;
+    $this->merek = $merek;
     $this->stok = $stok;
     $this->ukuranLayar = $ukuranLayar;
   }

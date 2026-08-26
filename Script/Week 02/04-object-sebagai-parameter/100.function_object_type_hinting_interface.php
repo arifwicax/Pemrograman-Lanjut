@@ -1,13 +1,13 @@
 <?php
 class Perangkat {
-  public $jenama;
+  public $merek;
   public $tipe;
-  public $biaya;
+  public $harga;
 
-  public function __construct($jenama,$tipe,$biaya){
-    $this->merek = $jenama;
+  public function __construct($merek,$tipe,$harga){
+    $this->merek = $merek;
     $this->tipe = $tipe;
-    $this->harga = $biaya;
+    $this->harga = $harga;
   }
 }
 

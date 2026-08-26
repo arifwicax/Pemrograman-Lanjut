@@ -1,12 +1,12 @@
 <?php
 class Perangkat {
   public $jenis;
-  public $jenama;
+  public $merek;
   public $stok;
 
-  public function __construct($jenis, $jenama, $stok = 10){
+  public function __construct($jenis, $merek, $stok = 10){
     $this->jenis = $jenis;
-    $this->merek = $jenama;
+    $this->merek = $merek;
     $this->stok = $stok;
   }
 }

@@ -1,6 +1,6 @@
 <?php
 class Perangkat {
-  public $sku;
+  public $kodeProduk;
   public $stok;
 }
 

@@ -15,10 +15,10 @@ try {
   // Input data 1
   $nama = "Cosmos CRJ-8229 - Rice Cooker";
   $kuantitas = 4;
-  $biaya = 299000;
+  $harga = 299000;
   $tanggal = $waktuCatat;
 
-  $pernyataan->execute(['nama'=>$nama, 'jumlah'=>4, 'harga'=>$biaya,
+  $pernyataan->execute(['nama'=>$nama, 'jumlah'=>4, 'harga'=>$harga,
                   'tanggal'=>$tanggal]);
   echo "Query Ok, ".$pernyataan->rowCount()." baris berhasil ditambah <br>";
 

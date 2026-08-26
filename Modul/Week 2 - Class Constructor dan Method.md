@@ -156,12 +156,12 @@ echo $lampuKelas->status; // mati
 
 ### Perbedaan Constructor dan Method Biasa
 
-| Aspek | Constructor | Method biasa |
-| ----- | ----------- | ------------ |
-| Nama method | `__construct()` | Bebas sesuai kebutuhan |
-| Waktu dijalankan | Otomatis ketika objek dibuat dengan `new` | Ketika dipanggil secara eksplisit |
-| Tujuan umum | Memberikan nilai atau kondisi awal objek | Menjalankan perilaku tertentu dari objek |
-| Cara menjalankan | `new NamaClass(...)` | `$objek->namaMethod()` |
+| Aspek            | Constructor                                | Method biasa                             |
+| ---------------- | ------------------------------------------ | ---------------------------------------- |
+| Nama method      | `__construct()`                          | Bebas sesuai kebutuhan                   |
+| Waktu dijalankan | Otomatis ketika objek dibuat dengan`new` | Ketika dipanggil secara eksplisit        |
+| Tujuan umum      | Memberikan nilai atau kondisi awal objek   | Menjalankan perilaku tertentu dari objek |
+| Cara menjalankan | `new NamaClass(...)`                     | `$objek->namaMethod()`                 |
 
 > **Catatan:** Setiap kali objek baru dibuat, constructor akan dijalankan kembali untuk objek tersebut. Argumen pada `new NamaClass(...)` harus sesuai dengan parameter yang didefinisikan dalam `__construct()`.
 

@@ -1,10 +1,10 @@
 <?php
 class Perangkat {
-  public $jenama = "CakraDigital";
+  public $merek = "CakraDigital";
 }
 
 class Monitor extends Perangkat {
-  public $jenama = "Panasonic";
+  public $merek = "Panasonic";
 }
 
 $perangkat01 = new Monitor();

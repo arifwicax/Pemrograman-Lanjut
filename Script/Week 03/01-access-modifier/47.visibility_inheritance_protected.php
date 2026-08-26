@@ -1,6 +1,6 @@
 <?php
 class Perangkat {
-  protected $jenama = "MerapiKomputasi";
+  protected $merek = "MerapiKomputasi";
 
   protected function hello(){
     return "Ini adalah Perangkat";

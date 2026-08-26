@@ -1,6 +1,6 @@
 <?php
 class Perangkat {
-  private $jenama = "MerapiKomputasi";
+  private $merek = "MerapiKomputasi";
 
   private function hello(){
     return "Ini adalah Perangkat";

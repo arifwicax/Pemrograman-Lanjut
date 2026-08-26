@@ -1,8 +1,8 @@
 <?php
 class Perangkat {
-  public $sku = "001";
-  public $jenama = "NusaTech";
-  public $biaya = 4000000;
+  public $kodeProduk = "001";
+  public $merek = "NusaTech";
+  public $harga = 4000000;
 
   public function pesanProduk(){
     return "Perangkat dipesan...";
@@ -10,11 +10,11 @@ class Perangkat {
 }
 
 $mesinCuci = new Perangkat();
-$mesinCuci->sku = "002";
+$mesinCuci->kodeProduk = "002";
 $mesinCuci->merek = "LenteraTech";
 $mesinCuci->harga = 1500000;
 
-echo $mesinCuci->sku;              // 002
+echo $mesinCuci->kodeProduk;              // 002
 echo "<br>";
 echo $mesinCuci->merek;            // LenteraTech
 echo "<br>"; 

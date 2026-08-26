@@ -1,7 +1,7 @@
 <?php
 class Perangkat {
   public $jenis;
-  public $jenama;
+  public $merek;
   public $stok;
 
   public function borongProduk($kuantitas = 10){

@@ -1,10 +1,10 @@
 <?php
 class Perangkat {
-  private $jenama;
+  private $merek;
   private $stok;
 
-  public function setMerek($jenama){
-    $this->merek = $jenama;
+  public function setMerek($merek){
+    $this->merek = $merek;
   }
 
   public function setStok($stok){

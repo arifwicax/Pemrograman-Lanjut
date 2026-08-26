@@ -15,11 +15,11 @@ class Perusahaan {
 }
 
 class Smartphone {
-  private $jenama;
+  private $merek;
   private $suplier;
 
-  public function __construct($jenama, Perusahaan $suplier){
-    $this->merek = $jenama;
+  public function __construct($merek, Perusahaan $suplier){
+    $this->merek = $merek;
     $this->suplier = $suplier;
   }
 

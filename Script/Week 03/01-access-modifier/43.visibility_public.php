@@ -1,6 +1,6 @@
 <?php
 class Perangkat {
-  var $jenama;
+  var $merek;
 
   public function hello(){
     return "Ini adalah Perangkat";

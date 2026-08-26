@@ -1,8 +1,8 @@
 <?php
 class Perangkat {
-  public $sku = "000";
-  public $jenama = "";
-  public $biaya = 0;
+  public $kodeProduk = "000";
+  public $merek = "";
+  public $harga = 0;
 
   public function pesanProduk(){
     return "Perangkat dipesan...";
@@ -10,17 +10,17 @@ class Perangkat {
 }
 
 $monitor = new Perangkat();
-$monitor->sku = "001";
+$monitor->kodeProduk = "001";
 $monitor->merek = "samsung";
 $monitor->harga = 1500000;
 
 $mesinCuci = new Perangkat();
-$mesinCuci->sku = "002";
+$mesinCuci->kodeProduk = "002";
 $mesinCuci->merek = "LenteraTech";
 $mesinCuci->harga = 1500000;
 
 $speaker = new Perangkat();
-$speaker->sku = "003";
+$speaker->kodeProduk = "003";
 $speaker->merek = "Edifier ";
 $speaker->harga = 950000;
 

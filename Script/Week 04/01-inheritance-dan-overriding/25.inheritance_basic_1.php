@@ -1,6 +1,6 @@
 <?php
 class Perangkat {
-  public $jenama = "SagaraElektronik";
+  public $merek = "SagaraElektronik";
   public $stok = 50;
 
   public function cekStok(){

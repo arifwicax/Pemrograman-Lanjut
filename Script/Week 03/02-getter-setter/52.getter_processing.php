@@ -1,10 +1,10 @@
 <?php
 class Perangkat {
-  private $jenama = "";
+  private $merek = "";
 
-  public function setMerek($jenama){
-    if (is_string($jenama)) {
-      $this->merek = $jenama;
+  public function setMerek($merek){
+    if (is_string($merek)) {
+      $this->merek = $merek;
     }
     else {
       echo "Error: merek harus berbentuk string <br>";

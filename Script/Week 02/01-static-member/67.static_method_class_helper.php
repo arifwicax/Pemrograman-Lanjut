@@ -1,20 +1,20 @@
 <?php
 class ProdukHelper {
-  public static function cekValidSKU($sku){
-    return preg_match("/^[A-Z]{3}[0-9]{3}$/",$sku);
+  public static function cekValidKodeProduk($kodeProduk){
+    return preg_match("/^[A-Z]{3}[0-9]{3}$/",$kodeProduk);
   }
 
-  public static function cekValidMerek($jenama){
+  public static function cekValidMerek($merek){
     $semuaMerek=["NusaTech","LenteraTech","CakraDigital","Philips","SagaraElektronik","Sanken"];
-    return in_array($jenama,$semuaMerek);
+    return in_array($merek,$semuaMerek);
   }
 }
 
-if (ProdukHelper::cekValidSKU("AAA545")) {
+if (ProdukHelper::cekValidKodeProduk("AAA545")) {
   echo "Merek AAA545 valid <br>";
 }
 
-if (ProdukHelper::cekValidSKU("AAa545")) {
+if (ProdukHelper::cekValidKodeProduk("AAa545")) {
   echo "Merek AAa545 valid <br>";
 }
 
