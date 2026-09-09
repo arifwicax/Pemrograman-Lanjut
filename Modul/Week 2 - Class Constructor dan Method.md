@@ -60,12 +60,14 @@ Setelah mengikuti perkuliahan minggu kedua, mahasiswa mampu:
 Bahan kajian pada pertemuan minggu kedua meliputi:
 
 * Pengertian dan penggunaan *constructor*
+* Penggunaan *destructor*
 * *Static property* dan *static method*
 * *Class constant*
-* Penggunaan keyword `self` dan `static`
+* Penggunaan keyword `self`, `parent`, dan `$this`
 * *Method chaining*
 * Interaksi antar objek (object sebagai parameter dan return value)
-* Penerapan constructor dengan validasi
+* *Type hinting*, interface, dan operator `instanceof`
+* Penerapan constructor dengan parameter default dan validasi
 
 ---
 
@@ -85,6 +87,8 @@ Indikator tersebut dijabarkan ke dalam kemampuan sebagai berikut:
 6. Menerapkan *method chaining* untuk merangkai pemanggilan method.
 7. Menggunakan objek sebagai parameter dan nilai kembalian (*return value*) method.
 8. Merancang *constructor* dengan validasi tipe data input.
+9. Menjelaskan penggunaan *destructor* dan member static pada pewarisan class.
+10. Menerapkan *type hinting* dan `instanceof` untuk memeriksa tipe objek.
 
 ---
 
@@ -489,7 +493,157 @@ try {
 
 ---
 
-## 9.7. Rangkuman
+## 9.7. Destructor
+
+**Destructor** adalah method khusus `__destruct()` yang dijalankan ketika objek akan dihancurkan, biasanya ketika program selesai. Destructor dapat digunakan untuk pekerjaan pembersihan, misalnya menutup file atau koneksi database.
+
+```php
+<?php
+class Perangkat {
+    public function __construct() {
+        echo "Constructor dijalankan.<br>";
+    }
+
+    public function __destruct() {
+        echo "Destructor dijalankan.<br>";
+    }
+}
+
+$perangkat01 = new Perangkat();
+$perangkat02 = new Perangkat();
+```
+
+> **Catatan:** Constructor berjalan saat `new` digunakan. Destructor tidak dipanggil secara manual dalam penggunaan normal; PHP menjalankannya saat objek tidak lagi digunakan atau eksekusi program berakhir.
+
+## 9.8. Constructor dengan Parameter Default dan Validasi Setter
+
+Parameter constructor dapat memiliki nilai default. Dengan demikian, pemanggil boleh tidak mengisi parameter tersebut.
+
+```php
+<?php
+class Perangkat {
+    public $jenis;
+    public $merek;
+    public $stok;
+
+    public function __construct($jenis, $merek, $stok = 10) {
+        $this->jenis = $jenis;
+        $this->merek = $merek;
+        $this->stok = $stok;
+    }
+}
+
+$monitor = new Perangkat("Monitor", "NusaTech", 20);
+$mesinCuci = new Perangkat("Mesin cuci", "LenteraTech");
+// Stok $mesinCuci bernilai 10.
+```
+
+Validasi juga dapat dipisahkan ke method setter privat. Constructor cukup memanggil setter tersebut sehingga aturan validasi tetap berada dalam class dan dapat digunakan kembali.
+
+```php
+<?php
+class Perangkat {
+    private $merek;
+    private $stok;
+
+    private function setMerek($merek) {
+        if (!is_string($merek)) {
+            throw new InvalidArgumentException("Merek harus berupa string.");
+        }
+        $this->merek = $merek;
+    }
+
+    private function setStok($stok) {
+        if (!is_int($stok) || $stok < 0) {
+            throw new InvalidArgumentException("Stok harus bilangan bulat positif.");
+        }
+        $this->stok = $stok;
+    }
+
+    public function __construct($merek, $stok) {
+        $this->setMerek($merek);
+        $this->setStok($stok);
+    }
+}
+```
+
+## 9.9. Static Member pada Pewarisan
+
+Class turunan mewarisi static property dan static method milik parent. Dari dalam class turunan, `self::` merujuk pada class tempat kode ditulis, sedangkan `parent::` secara eksplisit merujuk pada parent class. Nama parent class juga dapat digunakan langsung.
+
+```php
+<?php
+class Perangkat {
+    private static $jumlahPerangkat = 100;
+
+    public static function cekProduk() {
+        return "Total perangkat ada " . self::$jumlahPerangkat;
+    }
+}
+
+class Blender extends Perangkat {
+    public function cekBlender() {
+        return self::cekProduk() . ", termasuk 3 jenis blender";
+    }
+}
+
+class HairDryer extends Perangkat {
+    public function cekHairDryer() {
+        return parent::cekProduk() . ", termasuk 5 jenis hair dryer";
+    }
+}
+```
+
+Static property atau constant juga dapat dibuat `private` agar hanya method di dalam class yang dapat mengaksesnya. Pola ini menjaga data level class tetap terenkapsulasi.
+
+## 9.10. Static Method sebagai Helper
+
+Class helper mengelompokkan fungsi yang tidak membutuhkan data objek. Semua method dipanggil melalui nama class sehingga objek helper tidak perlu dibuat.
+
+```php
+<?php
+class ProdukHelper {
+    public static function cekValidKodeProduk($kodeProduk) {
+        return preg_match('/^[A-Z]{3}[0-9]{3}$/', $kodeProduk) === 1;
+    }
+
+    public static function cekValidMerek($merek) {
+        $merekTersedia = ["NusaTech", "LenteraTech", "CakraDigital"];
+        return in_array($merek, $merekTersedia, true);
+    }
+}
+
+echo ProdukHelper::cekValidKodeProduk("AAA545"); // 1
+```
+
+## 9.11. Type Hinting, Interface, dan `instanceof`
+
+Type hinting memastikan parameter menerima objek dari class, class turunan, atau interface yang sesuai. Jika parameter diberi type hint parent class, objek dari class turunannya juga dapat digunakan. Jika diberi type hint interface, semua class yang mengimplementasikan interface tersebut dapat diterima.
+
+```php
+<?php
+interface SmartElectronic {
+    public function cekOS();
+}
+
+class Monitor implements SmartElectronic {
+    public function cekOS() {
+        return "Android 9.0";
+    }
+}
+
+function tampilkanOS(SmartElectronic $perangkat) {
+    return $perangkat->cekOS();
+}
+
+$monitor = new Monitor();
+echo tampilkanOS($monitor);
+echo $monitor instanceof SmartElectronic; // 1
+```
+
+Operator `instanceof` memeriksa tipe objek saat program berjalan. Operator ini dapat memeriksa hubungan objek dengan class parent, class itu sendiri, maupun interface; hasilnya berupa `true` atau `false`.
+
+## 9.12. Rangkuman
 
 | Konsep                  | Cara Akses                                        | Keterangan                                  |
 | ----------------------- | ------------------------------------------------- | ------------------------------------------- |
@@ -500,3 +654,7 @@ try {
 | *Method chaining*     | `$obj->m1()->m2()->m3()`                        | Setiap method`return $this`               |
 | Objek sebagai parameter | Type hint:`function f(NamaClass $obj)`          | Memastikan tipe yang diterima               |
 | Validasi di constructor | `throw new Exception(...)`                      | Mencegah objek dengan data tidak valid      |
+| *Destructor*          | `public function __destruct()`                   | Pembersihan saat objek dihancurkan          |
+| Parameter default     | `__construct($stok = 10)`                       | Nilai digunakan jika argumen tidak diisi    |
+| Helper static         | `NamaHelper::method()`                           | Fungsi utilitas tanpa membuat objek         |
+| `instanceof`          | `$objek instanceof NamaClass`                   | Memeriksa tipe objek saat runtime           |
