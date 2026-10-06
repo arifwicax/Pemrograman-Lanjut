@@ -13,347 +13,125 @@
 | Dosen Pengampu | **Arif Wicaksono Septyanto, S.Kom., M.Kom.** |
 | Durasi | 1 pertemuan (3 × 50 menit) |
 
-Mahasiswa mampu mengaplikasikan koneksi database menggunakan MySQLi Object, menjalankan query, mengolah result set, menerapkan prepared statement dan parameter binding, serta menangani kesalahan dan transaksi database secara terkontrol (C3, A4, P2).
+Setelah mengikuti materi ini, mahasiswa mampu menjelaskan konsep koneksi database menggunakan MySQLi Object, memahami proses menjalankan query dan mengolah result set, menjelaskan fungsi validasi input dan prepared statement, serta memahami penanganan kesalahan dan transaksi database.
 
-## 2. Prasyarat dan Struktur Script
+## 2. Prasyarat dan Cakupan Materi
 
-Prasyarat: dasar PHP dan class/object, SQL dasar, serta try-catch-finally dari Minggu 5.
+Materi ini memerlukan pemahaman dasar PHP, class dan object, SQL dasar, serta struktur `try-catch-finally` yang telah dipelajari pada Minggu 5.
 
-Contoh menggunakan database kampus_lanjut dan tabel inventaris. Sesuaikan username/password MySQL dengan komputer masing-masing. Script praktik berada di [Script/Week 06](../Script/Week%2006/):
+Database latihan yang digunakan dalam praktik adalah `kampus_lanjut` dengan tabel `inventaris`. Contoh implementasi untuk setiap konsep tersedia pada folder [Script/Week 06](../Script/Week%2006/), tetapi bagian teori ini berfokus pada pengertian dan prinsip kerja.
 
-1. 01-koneksi-dan-query: koneksi, database, tabel, dan query dasar.
-2. 02-result-set: membaca hasil SELECT, menampilkan data, serta query perubahan.
-3. 03-validasi-input-sql: validasi tipe input dan pembahasan SQL injection.
-4. 04-prepared-statement: prepare, binding, SELECT, INSERT, dan penggunaan ulang statement.
-5. 05-transaksi: begin_transaction, commit, dan rollback.
+Urutan konsep yang dipelajari adalah:
 
-Alur praktik:
+**Koneksi → database dan tabel → query serta result set → validasi input → prepared statement → transaksi**
 
-Koneksi → database/tabel → query/result set → validasi input → prepared statement → transaksi
+## 3. MySQLi Object
 
-### Cara membaca folder praktik
+MySQLi adalah ekstensi PHP yang digunakan untuk berkomunikasi dengan database MySQL. MySQLi mendukung gaya prosedural dan object-oriented. Pada materi ini digunakan gaya object-oriented, sehingga koneksi, query, result set, dan statement direpresentasikan sebagai object serta diakses melalui property dan method.
 
-Jalankan script secara berurutan. Setiap kelompok script menambahkan satu konsep baru pada kode sebelumnya. Nama variabel pada script menggunakan istilah yang sama, seperti `$databaseMysqli`, `$perintahSql`, `$hasil`, dan `$pernyataan`, agar alurnya mudah dibandingkan.
+Object koneksi menyimpan informasi tentang hubungan antara aplikasi PHP dan server MySQL. Informasi yang diperlukan untuk membuat koneksi biasanya terdiri atas host, username, password, dan nama database.
 
-## 3. Koneksi MySQLi Object
+Exception MySQLi dapat diaktifkan agar kegagalan koneksi atau query dilaporkan sebagai exception. Dengan cara ini, kesalahan dapat ditangani menggunakan `try-catch`, sedangkan pembersihan resource dapat dilakukan pada `finally`.
 
-Aktifkan exception MySQLi sebelum membuat koneksi:
+Pengaturan charset koneksi penting agar data teks dapat dikirim dan diterima dengan benar. Setelah selesai digunakan, koneksi perlu ditutup untuk membebaskan resource. Detail kesalahan teknis sebaiknya dicatat pada log, bukan ditampilkan langsung kepada pengguna.
 
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+## 4. Database dan Tabel
 
-    try {
-        $db = new mysqli('localhost', 'root', '', 'kampus_lanjut');
-        $db->set_charset('utf8mb4');
-        echo 'Koneksi berhasil';
-    } catch (mysqli_sql_exception $error) {
-        error_log($error->getMessage());
-        echo 'Koneksi database gagal.';
-    } finally {
-        if (isset($db)) {
-            $db->close();
-        }
-    }
+Database merupakan kumpulan data yang dikelola secara terstruktur. Tabel menyimpan data dalam bentuk baris dan kolom. Setiap tabel biasanya memiliki primary key sebagai identitas unik setiap baris.
 
-new mysqli menerima host, username, password, dan database. set_charset mengatur encoding. close menutup koneksi.
+Pada tabel `inventaris`, kolom dapat menyimpan identitas inventaris, nama barang, jumlah, biaya, dan waktu pembaruan. Tipe data kolom harus dipilih sesuai karakteristik data, misalnya bilangan bulat untuk jumlah, desimal untuk biaya, dan tipe waktu untuk tanggal atau waktu.
 
-Script terkait: 01-koneksi-dan-query/10.mysqli_query.php sampai 14.mysqli_query_error_exception_2.php.
-
-Potongan dari `10.mysqli_query.php` memperlihatkan pola dasar koneksi dan query:
-
-    $databaseMysqli = new mysqli(
-        'localhost',
-        'root',
-        '',
-        'kampus_lanjut'
-    );
-    $perintahSql = 'SELECT * FROM inventaris';
-    $hasil = $databaseMysqli->query($perintahSql);
-
-Script awal menunjukkan pemeriksaan $db->error, die(), dan exception. Untuk aplikasi, exception lebih terstruktur. Detail error sebaiknya dicatat memakai error_log(), bukan ditampilkan kepada pengguna.
-
-## 4. Menyiapkan Database dan Tabel
-
-Script 15.mysqli_create_database.php sampai 20.mysqli_generate.php menunjukkan cara membuat database, memilih database, membuat tabel, menghapus tabel lama, dan mengisi data.
-
-    CREATE TABLE inventaris (
-        id_inventaris INT PRIMARY KEY AUTO_INCREMENT,
-        nama_inventaris VARCHAR(50),
-        jumlah_inventaris INT,
-        biaya_inventaris DECIMAL(12, 2),
-        waktu_pembaruan TIMESTAMP
-    );
-
-    INSERT INTO inventaris
-        (nama_inventaris, jumlah_inventaris, biaya_inventaris, waktu_pembaruan)
-    VALUES ('Laptop ASUS ROG GL503GE', 7, 16200000, CURRENT_TIMESTAMP);
-
-Jalankan script pembuat database/tabel pada database latihan. DROP TABLE dan DELETE dapat menghilangkan data sehingga jangan dijalankan pada database penting.
+Operasi pembuatan database dan tabel termasuk operasi definisi struktur data. `DROP TABLE` menghapus struktur sekaligus data, sedangkan `DELETE` menghapus baris data. Operasi tersebut harus dilakukan hati-hati dan tidak dijalankan pada database penting tanpa pemeriksaan.
 
 ## 5. Query dan Result Set
 
-### Menjalankan SELECT
+Query adalah perintah SQL yang dikirimkan aplikasi kepada database. Query dapat digunakan untuk membaca, menambahkan, mengubah, atau menghapus data.
 
-    $hasil = $db->query('SELECT * FROM inventaris');
-    echo 'Kolom: ' . $hasil->field_count;
-    echo ' Baris: ' . $hasil->num_rows;
+Query `SELECT` menghasilkan result set, yaitu object yang berisi kumpulan baris dan informasi kolom dari hasil pembacaan database. Informasi penting pada result set meliputi jumlah baris dan jumlah kolom.
 
-$hasil adalah object mysqli_result. num_rows berisi jumlah baris, field_count jumlah kolom, dan free() membebaskan memory.
-
-### Membaca baris
+Baris result set dapat dibaca dengan beberapa bentuk:
 
 | Method | Bentuk hasil |
 | --- | --- |
-| fetch_row() | Array dengan index angka |
-| fetch_assoc() | Array dengan nama kolom |
-| fetch_array(MYSQLI_ASSOC) | Array associative |
-| fetch_object() | Object dengan properti nama kolom |
-| fetch_all(MYSQLI_ASSOC) | Semua baris sebagai array |
-
-Rekomendasi untuk pemula:
-
-    $hasil = $db->query('SELECT * FROM inventaris');
-    while ($baris = $hasil->fetch_assoc()) {
-        echo $baris['id_inventaris'] . ' | ';
-        echo $baris['nama_inventaris'] . ' | ';
-        echo $baris['jumlah_inventaris'] . '<br>';
-    }
-    $hasil->free();
+| `fetch_row()` | Array dengan index numerik |
+| `fetch_assoc()` | Array dengan nama kolom sebagai key |
+| `fetch_array()` | Array numerik, associative, atau keduanya sesuai mode |
+| `fetch_object()` | Object dengan property dari nama kolom |
+| `fetch_all()` | Seluruh baris dalam bentuk array |
 
-Satu baris dibaca dengan fetch_assoc(). Seluruh baris dapat dibaca dengan fetch_all(MYSQLI_ASSOC). Script terkait: 21.mysqli_result_object.php sampai 37.mysqli_fetch_array_process.php.
-
-### Menampilkan data ke HTML
+Method yang mengambil satu baris menggeser posisi pembacaan ke baris berikutnya. Ketika seluruh baris telah dibaca, tidak ada data lagi. Setelah result set tidak diperlukan, resource-nya sebaiknya dibebaskan. Untuk query yang mengubah data, jumlah baris yang terpengaruh dapat digunakan untuk mengetahui apakah perubahan terjadi.
 
-Data dari database harus di-escape:
+## 6. Menampilkan Data dan Output Escaping
 
-    function e(string $nilai): string
-    {
-        return htmlspecialchars($nilai, ENT_QUOTES, 'UTF-8');
-    }
+Data dari database yang ditampilkan ke halaman HTML harus diperlakukan sebagai data, bukan sebagai kode HTML. Karakter khusus perlu diubah menggunakan mekanisme escaping, misalnya `htmlspecialchars()`.
 
-    foreach ($data as $baris) {
-        echo '<td>' . e((string) $baris['id_inventaris']) . '</td>';
-        echo '<td>' . e($baris['nama_inventaris']) . '</td>';
-    }
+Output escaping mencegah data yang mengandung HTML atau JavaScript dijalankan oleh browser. Proses ini berbeda dari validasi input dan prepared statement: validasi memeriksa kelayakan data, prepared statement melindungi struktur query, sedangkan escaping melindungi konteks output HTML.
 
-Lihat 34.mysqli_result_fetch_all_html.php, 35.mysqli_result_fetch_all_html_style.php, dan 37.mysqli_fetch_array_process.php.
-
-Urutan yang perlu diingat dari script result set adalah:
-
-    $hasil = $databaseMysqli->query($perintahSql);
-    while ($baris = $hasil->fetch_assoc()) {
-        echo $baris['nama_inventaris'];
-    }
-    $hasil->free();
-
-`fetch_assoc()` mengembalikan satu baris setiap kali dipanggil. Ketika tidak ada baris lagi, nilainya menjadi `false`, sehingga cocok digunakan sebagai kondisi `while`.
-
-### Query DELETE dan beberapa query
-
-    $db->query('DELETE FROM inventaris WHERE id_inventaris = 1');
-    echo 'Data berubah: ' . $db->affected_rows;
+## 7. Validasi Input dan SQL Injection
 
-multi_query ditunjukkan pada 40.mysqli_multi_query.php dan 41.mysqli_multi_query_2.php, tetapi jangan menggabungkan input pengguna ke SQL. Untuk input gunakan prepared statement.
+Validasi input adalah proses memeriksa apakah data yang diterima aplikasi sesuai aturan, seperti tipe, format, panjang, nilai minimum, dan nilai maksimum. Validasi sebaiknya dilakukan sebelum data diproses atau dikirim ke database.
 
-## 6. Validasi Input dan SQL Injection
+SQL injection adalah serangan ketika input pengguna memengaruhi struktur perintah SQL. Hal ini dapat terjadi jika input digabungkan langsung ke dalam string query. Validasi, casting, dan `real_escape_string()` dapat membantu pada kondisi tertentu, tetapi bukan pengganti prepared statement. Prepared statement merupakan pilihan utama ketika query menggunakan nilai dari pengguna.
 
-Validasi dilakukan sebelum input dikirim ke database:
+## 8. Prepared Statement
 
-    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-    if ($id === false || $id === null || $id < 1) {
-        exit('ID tidak valid');
-    }
+Prepared statement memisahkan struktur SQL dari nilai data. Struktur query disiapkan menggunakan placeholder, biasanya tanda tanya. Nilai input kemudian dikirim sebagai parameter, bukan digabungkan ke dalam teks SQL.
 
-real_escape_string atau casting bukan pengganti prepared statement. Script 42.mysqli_validate_int.php sampai 47.mysqli_validate_string_real_escape_string.php membandingkan beberapa pendekatan; gunakan prepared statement sebagai pilihan utama.
+Tahap prepared statement adalah:
 
-Contoh pemeriksaan integer dari `42.mysqli_validate_int.php` dapat dikembangkan menjadi validasi yang menghentikan proses sebelum query dijalankan:
+1. **Prepare**, menyiapkan struktur SQL dan placeholder.
+2. **Bind**, menghubungkan nilai PHP dengan placeholder serta menentukan tipe data.
+3. **Execute**, menjalankan query dengan nilai parameter.
+4. **Mengambil hasil**, membaca result set jika query menghasilkan data.
 
-    $id_inventaris = filter_input(
-        INPUT_GET,
-        'id_inventaris',
-        FILTER_VALIDATE_INT
-    );
+Kode tipe parameter terdiri atas `i` untuk integer, `d` untuk double atau desimal, `s` untuk string, dan `b` untuk data biner. Jumlah kode tipe harus sama dengan jumlah parameter yang diikat dan urutannya harus sesuai.
 
-    if ($id_inventaris === false || $id_inventaris === null) {
-        exit('ID inventaris tidak valid');
-    }
+Prepared statement dapat digunakan untuk `SELECT`, `INSERT`, `UPDATE`, dan `DELETE`. Statement yang sama dapat digunakan kembali dengan nilai parameter berbeda.
 
-## 7. Prepared Statement
+## 9. Pengambilan Hasil Prepared Statement
 
-Prepared statement memisahkan struktur SQL dari nilai input. Empat tahapnya adalah prepare, bind_param, execute, lalu get_result atau bind_result.
+Hasil query `SELECT` dari prepared statement dapat diambil menggunakan `get_result()` apabila dukungan driver tersedia. Hasil tersebut dapat dibaca dengan method seperti `fetch_assoc()` atau `fetch_object()`.
 
-Kode tipe bind_param: i = integer, d = double/desimal, s = string, b = data biner. Jumlah kode harus sama dengan jumlah tanda tanya.
+Alternatifnya adalah `bind_result()`. Dengan cara ini, kolom hasil dihubungkan ke variabel PHP dan nilainya diisi setiap kali statement melakukan proses fetch. Pendekatan ini berguna pada lingkungan yang tidak menyediakan `get_result()`.
 
-### SELECT dengan get_result
-
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    try {
-        $db = new mysqli('localhost', 'root', '', 'kampus_lanjut');
-        $db->set_charset('utf8mb4');
-        $id = 5;
-        $statement = $db->prepare(
-            'SELECT id_inventaris, nama_inventaris, jumlah_inventaris,
-                    biaya_inventaris, waktu_pembaruan
-             FROM inventaris WHERE id_inventaris = ?'
-        );
-        $statement->bind_param('i', $id);
-        $statement->execute();
-        $hasil = $statement->get_result();
-        while ($baris = $hasil->fetch_assoc()) {
-            echo htmlspecialchars($baris['nama_inventaris'], ENT_QUOTES, 'UTF-8');
-        }
-        $hasil->free();
-        $statement->close();
-    } catch (mysqli_sql_exception $error) {
-        error_log($error->getMessage());
-        echo 'Operasi database gagal.';
-    } finally {
-        if (isset($db)) {
-            $db->close();
-        }
-    }
-
-Script terkait: 48.mysqli_prepared_select.php dan 49.mysqli_prepared_select_2.php.
-
-Jika dibandingkan dengan query biasa, inti perubahan pada `48.mysqli_prepared_select.php` adalah tiga baris berikut:
-
-    $pernyataan = $databaseMysqli->prepare(
-        'SELECT * FROM inventaris WHERE id_inventaris = ?'
-    );
-    $pernyataan->bind_param('i', $id_inventaris);
-    $pernyataan->execute();
-
-Tanda `?` bukan nilai data. Tanda tersebut adalah tempat yang akan diisi melalui `bind_param()`.
-
-### Menggunakan ulang statement
-
-Variabel yang sudah di-bind dapat diberi nilai baru sebelum execute:
+Pada pencarian menggunakan `LIKE`, wildcard seperti persen merupakan bagian dari nilai parameter. Nilai pencarian perlu disiapkan sebagai parameter sebelum statement dijalankan, sehingga struktur query tetap terpisah dari kata kunci pengguna.
 
-    $statement = $db->prepare(
-        'SELECT * FROM inventaris WHERE id_inventaris = ?'
-    );
-    $statement->bind_param('i', $id);
-    $id = 2;
-    $statement->execute();
-    $hasil = $statement->get_result();
-    $baris = $hasil->fetch_assoc();
-    $hasil->free();
-    $id = 4;
-    $statement->execute();
-    $hasil = $statement->get_result();
-    $baris = $hasil->fetch_assoc();
-    $hasil->free();
-    $statement->close();
+## 10. Transaksi dan Rollback
 
-Lihat 50.mysqli_prepared_reuse.php.
+Transaksi adalah sekumpulan operasi database yang diperlakukan sebagai satu kesatuan. Tujuannya menjaga konsistensi data ketika beberapa operasi saling bergantung.
 
-### Bentuk hasil lain
+Alur transaksi meliputi memulai transaksi, menjalankan operasi, melakukan `commit` jika seluruh operasi berhasil, dan melakukan `rollback` jika terjadi kegagalan. `Commit` membuat perubahan permanen, sedangkan `rollback` membatalkan perubahan sejak transaksi dimulai. Transaksi hanya berlaku untuk operasi pada koneksi yang sama.
 
-    $baris = $statement->get_result()->fetch_object();
-    echo $baris->nama_inventaris;
-
-Contoh fetch_object dan method chaining ada di 51.mysqli_prepared_fetch_object.php dan 52.mysqli_prepared_method_chaining.php.
-
-Alternatif tanpa get_result:
+Operasi di dalam transaksi sebaiknya tetap menggunakan prepared statement apabila melibatkan input. Transaksi sesuai untuk proses yang tidak boleh meninggalkan database dalam keadaan setengah berubah.
 
-    $statement->bind_result($idHasil, $nama, $jumlah, $biaya, $waktu);
-    while ($statement->fetch()) {
-        echo $idHasil . ' | ' . $nama . ' | ' . $jumlah . '<br>';
-    }
+## 11. Penanganan Resource dan Error
 
-Contoh ini ada di 54.mysqli_prepared_fetch.php, 55.mysqli_prepared_fetch_2.php, dan 56.mysqli_prepared_fetch_while.php.
+Program database perlu mengelola koneksi, statement, dan result set. Resource tersebut sebaiknya ditutup atau dibebaskan setelah selesai digunakan.
 
-### LIKE dan INSERT
+Struktur `try-catch-finally` memisahkan tanggung jawab: `try` menjalankan operasi, `catch` menangani exception, dan `finally` melakukan pembersihan resource. Pemeriksaan keberadaan object sebelum memanggil method penutup penting karena koneksi atau statement mungkin belum berhasil dibuat ketika error terjadi.
 
-Wildcard persen menjadi bagian dari nilai parameter:
+## 12. Pola Program yang Disarankan
 
-    $kataKunci = '%kulkas%';
-    $statement = $db->prepare(
-        'SELECT * FROM inventaris WHERE nama_inventaris LIKE ?'
-    );
-    $statement->bind_param('s', $kataKunci);
-    $statement->execute();
+Pola umum program database yang aman adalah:
 
-Contoh INSERT:
+**Aktifkan exception → buat koneksi dan atur charset → validasi input → siapkan statement → ikat parameter → jalankan query → ambil result set → escape output → bebaskan resource → tutup koneksi.**
 
-    $statement = $db->prepare(
-        'INSERT INTO inventaris
-            (nama_inventaris, jumlah_inventaris, biaya_inventaris, waktu_pembaruan)
-         VALUES (?, ?, ?, ?)'
-    );
-    $statement->bind_param('siis', $nama, $jumlah, $biaya, $waktu);
-    $nama = 'Keyboard Mekanik';
-    $jumlah = 10;
-    $biaya = 450000;
-    $waktu = date('Y-m-d H:i:s');
-    $statement->execute();
+Hal yang perlu diperiksa:
 
-Lihat 53.mysqli_prepared_select_like.php, 57.mysqli_prepared_insert.php, dan 58.mysqli_prepared_insert_reuse.php.
+- Exception MySQLi telah diaktifkan.
+- Charset koneksi telah diatur.
+- Input telah divalidasi.
+- Input tidak digabungkan langsung ke string SQL.
+- Tipe dan jumlah parameter sesuai dengan query.
+- Data HTML telah di-escape.
+- Result set, statement, dan koneksi ditutup.
+- Detail error teknis tidak ditampilkan kepada pengguna.
+- Operasi yang saling bergantung dijalankan dalam transaksi.
 
-Pada `57.mysqli_prepared_insert.php`, string tipe `siis` dibaca dari kiri ke kanan:
+## 13. Ringkasan
 
-    $pernyataan->bind_param(
-        'siis',
-        $nama_inventaris,
-        $jumlah_inventaris,
-        $biaya_inventaris,
-        $waktu_pembaruan
-    );
+MySQLi Object menyediakan cara object-oriented untuk menghubungkan PHP dengan MySQL. Object koneksi digunakan untuk menjalankan query, sedangkan result set digunakan untuk membaca hasil `SELECT`.
 
-Artinya, nama adalah string, jumlah adalah integer, biaya pada script diperlakukan sebagai integer, dan waktu adalah string. Jika kolom biaya menggunakan pecahan, gunakan tipe `d` dan nilai desimal.
+Validasi input memastikan data sesuai aturan aplikasi. Prepared statement memisahkan struktur SQL dari nilai input sehingga membantu mencegah SQL injection. Output escaping melindungi halaman HTML dari data yang dianggap sebagai kode. Exception handling dan pengelolaan resource membuat program lebih terkontrol. Transaksi menggunakan `commit` dan `rollback` untuk menjaga konsistensi ketika beberapa operasi harus berhasil atau gagal sebagai satu kesatuan.
 
-## 8. Transaksi dan Rollback
-
-Transaksi membuat beberapa operasi menjadi satu kesatuan:
-
-    $db->begin_transaction();
-    try {
-        $db->query('DELETE FROM inventaris WHERE id_inventaris = 2');
-        $db->query('DELETE FROM inventaris WHERE id_inventaris = 4');
-        $db->commit();
-        echo 'Semua perubahan disimpan';
-    } catch (Throwable $error) {
-        $db->rollback();
-        echo 'Perubahan dibatalkan';
-    }
-
-Gunakan commit jika semua operasi berhasil dan rollback jika salah satu gagal. Script 59.transaction_rollback.php memperlihatkan kondisi sebelum, selama, dan setelah rollback. Pada aplikasi nyata, query di dalam transaksi juga sebaiknya prepared statement.
-
-Alur pada `59.transaction_rollback.php` adalah:
-
-    $databaseMysqli->begin_transaction();
-    // beberapa INSERT, UPDATE, atau DELETE
-    $databaseMysqli->rollback();
-
-Untuk menyimpan perubahan, ganti `rollback()` dengan `commit()`. Perhatikan bahwa transaksi hanya bermakna jika operasi dilakukan pada koneksi yang sama.
-
-## 9. Pola Program dan Checklist
-
-Aktifkan exception → buat koneksi dan atur charset → validasi input → prepare → bind_param → execute → ambil result set → escape output → free/close resource.
-
-- [ ] Exception MySQLi diaktifkan.
-- [ ] Charset koneksi diatur.
-- [ ] Input divalidasi.
-- [ ] Nilai input memakai tanda tanya, bukan gabungan string SQL.
-- [ ] Kode binding sesuai tipe data.
-- [ ] Output HTML memakai htmlspecialchars().
-- [ ] Result set, statement, dan koneksi ditutup.
-- [ ] Detail error tidak ditampilkan kepada pengguna.
-- [ ] Operasi yang saling bergantung memakai transaksi.
-
-## 10. Latihan dan Tugas Praktik
-
-Buat program pencarian inventaris dengan ketentuan:
-
-1. Terima parameter nama melalui GET.
-2. Validasi kata kunci minimal dua karakter.
-3. Cari dengan LIKE menggunakan prepared statement.
-4. Tampilkan ID, nama, jumlah, biaya, dan waktu dalam tabel HTML.
-5. Escape seluruh nilai dengan htmlspecialchars().
-6. Tampilkan pesan jika hasil kosong.
-7. Tangani kesalahan dengan try-catch-finally.
-
-Sebagai tugas, tambahkan form INSERT, validasi jumlah/biaya tidak negatif, pesan sukses/error terkontrol, serta penutupan resource. Update, delete, dan CRUD lengkap dilanjutkan pada Minggu 7.
-
-## 11. Ringkasan
-
-MySQLi Object menyediakan object koneksi dan result set untuk berkomunikasi dengan MySQL. Result set dibaca memakai fetch_assoc, fetch_row, fetch_object, atau fetch_all. Prepared statement memisahkan SQL dari input melalui prepare, bind_param, dan execute. Validasi, output escaping, exception handling, penutupan resource, dan transaksi menjadikan program database lebih aman dan terstruktur.
+Implementasi setiap konsep dapat dibuat secara bertahap berdasarkan teori ini, mulai dari koneksi sederhana hingga prepared statement dan transaksi.
