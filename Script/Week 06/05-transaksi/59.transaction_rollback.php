@@ -1,4 +1,8 @@
 <?php
+// Materi Week 06: Bagian 5: transaksi database dan pembatalan perubahan dengan rollback.
+// Script ini mendemonstrasikan: transaction rollback.
+// Ikuti alur kode dari atas ke bawah: siapkan koneksi, jalankan operasi,
+// proses hasil jika ada, lalu bebaskan resource dan tutup koneksi.
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 // Buat format tanggal hari ini

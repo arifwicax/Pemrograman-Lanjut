@@ -1,4 +1,8 @@
 <?php
+// Materi Week 06: Bagian 4: prepared statement, parameter binding, SELECT, INSERT, LIKE, dan pengambilan hasil.
+// Script ini mendemonstrasikan: mysqli prepared insert.
+// Ikuti alur kode dari atas ke bawah: siapkan koneksi, jalankan operasi,
+// proses hasil jika ada, lalu bebaskan resource dan tutup koneksi.
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 try {

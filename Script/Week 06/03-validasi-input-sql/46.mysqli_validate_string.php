@@ -1,4 +1,8 @@
 <?php
+// Materi Week 06: Bagian 3: validasi input dan perbandingan perlindungan terhadap SQL injection.
+// Script ini mendemonstrasikan: mysqli validate string.
+// Ikuti alur kode dari atas ke bawah: siapkan koneksi, jalankan operasi,
+// proses hasil jika ada, lalu bebaskan resource dan tutup koneksi.
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 $_GET['nama_inventaris'] = "Buku Moody's";

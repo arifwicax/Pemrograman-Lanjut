@@ -1,4 +1,8 @@
 <?php
+// Materi Week 06: Bagian 1: koneksi MySQLi Object, pembuatan database/tabel, query dasar, dan penanganan error.
+// Script ini mendemonstrasikan: mysqli create database.
+// Ikuti alur kode dari atas ke bawah: siapkan koneksi, jalankan operasi,
+// proses hasil jika ada, lalu bebaskan resource dan tutup koneksi.
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 try {

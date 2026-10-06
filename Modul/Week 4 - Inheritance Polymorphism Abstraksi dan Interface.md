@@ -1,3 +1,5 @@
+oke
+
 # MODUL PERKULIAHAN
 
 ## Mata Kuliah: Pemrograman Lanjut
@@ -6,13 +8,13 @@
 
 # 1. IDENTITAS MATA KULIAH
 
-| Komponen | Keterangan |
-| --- | --- |
-| Mata Kuliah | Pemrograman Lanjut |
-| Minggu | 4 |
-| Topik | Inheritance, Polymorphism, Abstraksi, dan Interface |
-| Dosen Pengampu | **Arif Wicaksono Septyanto, S.Kom., M.Kom.** |
-| Durasi | 1 Pertemuan (3 x 50 menit) |
+| Komponen       | Keterangan                                          |
+| -------------- | --------------------------------------------------- |
+| Mata Kuliah    | Pemrograman Lanjut                                  |
+| Minggu         | 4                                                   |
+| Topik          | Inheritance, Polymorphism, Abstraksi, dan Interface |
+| Dosen Pengampu | **Arif Wicaksono Septyanto, S.Kom., M.Kom.**  |
+| Durasi         | 1 Pertemuan (3 x 50 menit)                          |
 
 # 2. SUB-CPMK
 
@@ -37,14 +39,18 @@ Trait, magic method selain `__construct()` dan `__destruct()`, late static bindi
 Mahasiswa mampu:
 
 1. Membuat parent class dan child class menggunakan `extends`.
-2. Menjelaskan bahwa object child class tetap termasuk tipe parent class.
-3. Melakukan overriding property, method, constructor, dan destructor sesuai kebutuhan.
-4. Menggunakan `parent::` untuk memanggil method atau constructor milik parent class.
-5. Membuat abstract class dan mengimplementasikan abstract method pada child class.
-6. Memproses beberapa object berbeda melalui tipe atau method yang sama.
-7. Membuat interface, mengimplementasikannya pada class, dan memahami aturan method interface.
+2. Menjelaskan bahwa object child class juga termasuk tipe parent class serta memahami batas akses property yang diwarisi.
+3. Melakukan overriding method dan constructor atau destructor sesuai kebutuhan, serta menggunakan `parent::` jika perilaku parent tetap diperlukan.
+4. Membuat abstract class dan mengimplementasikan abstract method pada class konkret.
+5. Memproses object dari beberapa child class melalui parameter bertipe parent class atau interface.
+6. Membuat dan mengimplementasikan interface, termasuk memenuhi seluruh kontrak method-nya.
+7. Memilih penggunaan inheritance, abstract class, atau interface sesuai hubungan dan kebutuhan program, lalu menerapkannya dalam kode.
+
+**Bukti ketercapaian Sub-CPMK:** mahasiswa merancang hubungan class sederhana, menulis dan menjalankan program yang menggunakan konsep-konsep tersebut, serta menjelaskan alasan pemilihan parent class atau interface. Latihan dan studi kasus di bagian akhir menjadi sarana untuk menunjukkan penerapan tersebut.
 
 # 5. MATERI PERKULIAHAN
+
+Setiap blok kode pada modul ini adalah contoh terpisah. Jalankan satu contoh utuh dalam satu file PHP; jangan gabungkan contoh yang memakai nama class sama. Contoh yang diberi label “salah” atau menunjukkan fatal error memang sengaja tidak dapat dijalankan.
 
 ## 5.1 Gambaran Umum OOP Minggu Ke-4
 
@@ -54,12 +60,12 @@ Misalnya, `Monitor`, `MesinCuci`, dan `Speaker` sama-sama termasuk jenis `Perang
 
 Empat konsep utama pada minggu ini adalah:
 
-| Konsep | Makna Singkat |
-| --- | --- |
-| Inheritance | Child class mewarisi property dan method dari parent class. |
-| Overriding | Child class membuat ulang property atau method yang sudah ada di parent class. |
-| Abstraksi | Parent class berisi aturan umum, detailnya wajib dilengkapi oleh child class. |
-| Interface | Kontrak method yang wajib dimiliki oleh class yang mengimplementasikannya. |
+| Konsep       | Makna Singkat                                                                          |
+| ------------ | -------------------------------------------------------------------------------------- |
+| Inheritance  | Child class mewarisi property dan method dari parent class.                            |
+| Overriding   | Child class membuat ulang property atau method yang sudah ada di parent class.         |
+| Abstraksi    | Parent class berisi aturan umum, detailnya wajib dilengkapi oleh child class.          |
+| Interface    | Kontrak method yang wajib dimiliki oleh class yang mengimplementasikannya.             |
 | Polymorphism | Object berbeda dapat diproses dengan cara yang sama selama memiliki kontrak yang sama. |
 
 ## 5.2 Inheritance
@@ -247,27 +253,6 @@ Constructor adalah method khusus `__construct()` yang otomatis dijalankan saat o
 
 Contoh:
 
-```php
-<?php
-class Perangkat {
-  public $jenis;
-  public $merek;
-  public $stok;
-
-  public function __construct($jenis, $merek, $stok){
-    $this->jenis = $jenis;
-    $this->merek = $merek;
-    $this->stok = $stok;
-  }
-}
-
-$perangkat01 = new Perangkat("Monitor", "NusaTech", 20);
-
-echo "<pre>";
-print_r($perangkat01);
-echo "</pre>";
-```
-
 Jika child class tidak membuat constructor sendiri, constructor parent class akan digunakan.
 
 ```php
@@ -320,7 +305,7 @@ $perangkat01 = new Monitor("Monitor", "NusaTech", 20, "24 inch");
 
 ## 5.8 Destructor pada Inheritance
 
-Destructor adalah method khusus `__destruct()` yang otomatis dijalankan ketika object selesai digunakan atau program berakhir.
+Destructor adalah method khusus `__destruct()` yang dijalankan saat object tidak lagi memiliki referensi atau ketika skrip berakhir. Waktu pemanggilannya dapat dipengaruhi oleh referensi object yang masih ada.
 
 Contoh:
 
@@ -518,7 +503,7 @@ Pada contoh tersebut:
 
 ## 5.13 Polymorphism
 
-Polymorphism berarti "banyak bentuk". Dalam OOP, polymorphism memungkinkan object yang berbeda diproses dengan cara yang sama selama object tersebut memiliki method yang dibutuhkan.
+Polymorphism berarti "banyak bentuk". Object dari class berbeda dapat diproses melalui kontrak yang sama, misalnya karena semuanya merupakan turunan dari parent class yang sama atau mengimplementasikan interface yang sama.
 
 Contoh:
 
@@ -555,7 +540,7 @@ echo $perangkat02->cekMerek()."<br>"; // Electrolux
 echo $perangkat03->cekMerek()."<br>"; // SagaraElektronik
 ```
 
-Ketiga class berbeda, tetapi semuanya memiliki method `cekMerek()` karena sama-sama turunan dari `Perangkat`.
+Ketiga class berbeda, tetapi semuanya memiliki method `cekMerek()` karena diwajibkan oleh abstract class `Perangkat`.
 
 Contoh polymorphism dalam function:
 
@@ -570,18 +555,17 @@ echo tampilkanMerek($perangkat02); // Electrolux
 echo tampilkanMerek($perangkat03); // SagaraElektronik
 ```
 
-Function `tampilkanMerek()` dapat menerima `Monitor`, `MesinCuci`, atau `LemariEs`, selama object tersebut memiliki method `cekMerek()`.
+Tanpa type hint, PHP tidak memeriksa bahwa parameter benar-benar memiliki method `cekMerek()`. Jika method itu tidak tersedia, pemanggilan akan gagal saat program berjalan. Gunakan type hint agar kontraknya jelas dan kesalahan tipe lebih mudah ditemukan.
 
 Agar lebih aman, parameter function dapat diberi type hint:
 
 ```php
 <?php
 function tampilkanMerek(Perangkat $objectProduk){
-  return $objectProduk->cekMerek()."<br>";
-}
+  return $objectProduk->cekMerek()."<br>"
 ```
 
-Dengan type hint `Perangkat`, function hanya menerima object yang merupakan turunan dari `Perangkat`.
+**Dengan type hint**`Perangkat`, function menerima object `Perangkat` atau turunannya, seperti `Monitor`, `MesinCuci`, dan `LemariEs`. Jika class-class yang tidak satu keluarga perlu memenuhi kontrak yang sama, gunakan type hint berupa interface.
 
 ## 5.14 Interface
 
@@ -625,7 +609,7 @@ Penjelasan:
 Beberapa aturan penting interface:
 
 1. Method pada interface tidak memiliki body.
-2. Method interface harus bersifat `public`.
+2. Method yang dideklarasikan pada interface bersifat `public` dan tidak memiliki body.
 3. Class yang menggunakan interface wajib mengimplementasikan semua method interface.
 4. Satu class boleh mengimplementasikan lebih dari satu interface.
 5. Interface boleh mewarisi interface lain menggunakan `extends`.
@@ -767,14 +751,14 @@ Karena `PanganBeku extends PanganTersimpan`, class `PaketSayuran` wajib mengimpl
 
 Abstract class dan interface sama-sama dapat dipakai sebagai kontrak, tetapi tujuannya berbeda.
 
-| Aspek | Abstract Class | Interface |
-| --- | --- | --- |
-| Keyword | `abstract class` | `interface` |
-| Digunakan oleh class dengan | `extends` | `implements` |
-| Jumlah yang bisa dipakai class | Satu parent class | Bisa lebih dari satu interface |
-| Isi method | Bisa abstract dan non-abstract | Umumnya hanya kontrak method |
-| Property | Bisa memiliki property | Tidak dipakai untuk menyimpan state object |
-| Cocok untuk | Hubungan "adalah bagian dari keluarga yang sama" | Kemampuan atau kontrak yang bisa dimiliki banyak class |
+| Aspek                          | Abstract Class                                       | Interface                                              |
+| ------------------------------ | ---------------------------------------------------- | ------------------------------------------------------ |
+| Keyword                        | `abstract class`                                   | `interface`                                          |
+| Digunakan oleh class dengan    | `extends`                                          | `implements`                                         |
+| Jumlah yang bisa dipakai class | Satu parent class                                    | Bisa lebih dari satu interface                         |
+| Isi method                     | Bisa berisi implementasi atau berupa abstract method | Method yang dideklarasikan adalah kontrak tanpa body   |
+| State object                   | Dapat memiliki property untuk menyimpan state        | Tidak menyimpan property instance                      |
+| Cocok untuk                    | Hubungan "adalah bagian dari keluarga yang sama"     | Kemampuan atau kontrak yang bisa dimiliki banyak class |
 
 Contoh pemilihan:
 
@@ -793,17 +777,131 @@ Saat membuat program berbasis OOP, gunakan pertanyaan berikut:
 5. Apakah beberapa class berbeda perlu memiliki kemampuan yang sama, meskipun bukan satu keluarga? Jika ya, gunakan interface.
 6. Apakah function perlu menerima banyak jenis object dengan cara proses yang sama? Jika ya, gunakan polymorphism dengan type hint parent class atau interface.
 
+Contoh sederhana untuk setiap pertanyaan:
+
+**1. Property/method sama → parent class**
+
+```php
+<?php
+class Perangkat {
+  public $kodeProduk;
+  public $stok;
+}
+
+class Monitor extends Perangkat {
+  public $ukuranLayar;
+}
+```
+
+`kodeProduk` dan `stok` dipakai bersama oleh banyak jenis perangkat, sehingga ditempatkan di parent class `Perangkat`.
+
+**2. Perilaku child berbeda → overriding**
+
+```php
+<?php
+class Perangkat {
+  public function hello(){
+    return "Ini dari Perangkat";
+  }
+}
+
+class Monitor extends Perangkat {
+  public function hello(){
+    return "Ini dari Monitor";
+  }
+}
+```
+
+`Monitor` menulis ulang method `hello()` karena pesannya harus berbeda dari `Perangkat`.
+
+
+3. Parent terlalu umum untuk dibuat object langsung → abstract class
+
+```php
+<?php
+abstract class Perangkat {
+}
+
+class Monitor extends Perangkat {
+}
+
+$perangkat01 = new Monitor();     // boleh
+// $perangkat02 = new Perangkat(); // Fatal error, tidak boleh
+```
+
+`Perangkat` hanya masuk akal sebagai konsep umum, bukan sebagai object nyata, sehingga dijadikan abstract class.
+
+**4. Method wajib ada tapi detailnya beda-beda → abstract method**
+
+```php
+<?php
+abstract class Perangkat {
+  abstract public function cekStok(): string;
+}
+
+class Monitor extends Perangkat {
+  public function cekStok(): string {
+    return "Stok monitor tersedia";
+  }
+}
+
+class MesinCuci extends Perangkat {
+  public function cekStok(): string {
+    return "Stok mesin cuci tersedia";
+  }
+}
+```
+
+Semua child class wajib punya `cekStok()`, tetapi isinya bebas berbeda sesuai jenis perangkat.
+
+**5. Kemampuan sama meski beda keluarga → interface**
+
+```php
+<?php
+interface ProdukEkspor {
+  public function cekStandarEkspor(): bool;
+}
+
+class Monitor extends Perangkat implements ProdukEkspor {
+  public function cekStandarEkspor(): bool {
+    return true;
+  }
+}
+
+class Sepatu implements ProdukEkspor {
+  public function cekStandarEkspor(): bool {
+    return true;
+  }
+}
+```
+
+`Monitor` dan `Sepatu` bukan satu keluarga class, tetapi keduanya sama-sama bisa "diekspor", sehingga kemampuan itu dituangkan lewat interface `ProdukEkspor`.
+
+**6. Banyak jenis object diproses dengan cara sama → polymorphism**
+
+```php
+<?php
+function tampilkanStok(Perangkat $perangkat){
+  echo $perangkat->cekStok();
+}
+
+tampilkanStok(new Monitor());
+tampilkanStok(new MesinCuci());
+```
+
+Function `tampilkanStok()` cukup ditulis satu kali dengan type hint `Perangkat`, tetapi bisa menerima object `Monitor` maupun `MesinCuci` karena keduanya adalah `Perangkat`.
+
 ## 5.19 Kesalahan Umum
 
-| Kesalahan | Penyebab | Solusi |
-| --- | --- | --- |
-| Membuat object dari abstract class | Abstract class tidak bisa diinstansiasi | Buat object dari child class konkret |
-| Abstract method diberi isi | Abstract method hanya kontrak | Hapus body method |
-| Child class tidak mengisi abstract method | Kontrak parent belum dipenuhi | Implementasikan semua abstract method |
-| Signature method child berbeda | Parameter atau return type tidak cocok | Samakan signature dengan parent/interface |
-| Method interface dibuat private/protected | Method interface harus public | Gunakan `public` |
-| Meng-extend dua class sekaligus | PHP tidak mendukung multiple inheritance class | Gunakan satu `extends` dan beberapa `implements` |
-| Mengubah method `final` | Final method tidak boleh dioverride | Jangan override method tersebut |
+| Kesalahan                                 | Penyebab                                       | Solusi                                              |
+| ----------------------------------------- | ---------------------------------------------- | --------------------------------------------------- |
+| Membuat object dari abstract class        | Abstract class tidak bisa diinstansiasi        | Buat object dari child class konkret                |
+| Abstract method diberi isi                | Abstract method hanya kontrak                  | Hapus body method                                   |
+| Child class tidak mengisi abstract method | Kontrak parent belum dipenuhi                  | Implementasikan semua abstract method               |
+| Signature method child berbeda            | Parameter atau return type tidak cocok         | Samakan signature dengan parent/interface           |
+| Method interface dibuat private/protected | Method interface harus public                  | Gunakan`public`                                   |
+| Meng-extend dua class sekaligus           | PHP tidak mendukung multiple inheritance class | Gunakan satu`extends` dan beberapa `implements` |
+| Mengubah method`final`                  | Final method tidak boleh dioverride            | Jangan override method tersebut                     |
 
 # 6. CONTOH STUDI KASUS
 

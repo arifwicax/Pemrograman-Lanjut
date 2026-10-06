@@ -1,4 +1,8 @@
 <?php
+// Materi Week 06: Bagian 2: menjalankan SELECT, membaca result set, menampilkan data, serta perubahan data.
+// Script ini mendemonstrasikan: mysqli result fetch all html style.
+// Ikuti alur kode dari atas ke bawah: siapkan koneksi, jalankan operasi,
+// proses hasil jika ada, lalu bebaskan resource dan tutup koneksi.
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 try {
